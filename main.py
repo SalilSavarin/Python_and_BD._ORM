@@ -20,16 +20,9 @@ book_2 = Book(id=2, title='Duel to the Death with the Vulture!', publisher= publ
 shop_1 = Shop(id=1, name='OurGeekShop')
 stock_1 = Stock(id=1, id_book=1, id_shop=1, count=3)
 stock_2 = Stock(id=2, id_book=2, id_shop=1, count=4)
-# session.add_all([publisher_1,book_1,book_2,shop_1,stock_1,stock_2])
-# session.commit()
-res_1 = session.query(Publisher, Book).join(Book).filter(Publisher.id == 1).all()
-list_book_id = []
-for pub, book in res_1:
-    list_book_id.append(book.id)
-for id_book in list_book_id:
-    res_2 = session.query(Stock).join(Book).filter(Stock.id_book == id_book).all()
-    for stock in res_2:
-        print(stock.id_shop)
+session.add_all([publisher_1,book_1,book_2,shop_1,stock_1,stock_2])
+session.commit()
+
 
 def search_publisher():
     while True:
@@ -62,8 +55,6 @@ def search_publisher():
             inf_for_search= input('Введи имя и фамилию автора : ')
             for inf in session.query(Publisher).filter(Publisher.name.like(inf_for_search)).all():
                 print(inf)
-            for inf in session.query(Publisher).filter(Publisher.name.like(inf_for_search)).all():
-                print(inf)
             res_1 = session.query(Publisher, Book).join(Book).filter(Publisher.id == 1).all()
             list_book_id = []
             for pub, book in res_1:
@@ -74,6 +65,8 @@ def search_publisher():
                     id_shop = stock.id_shop
             for inf_shop in session.query(Shop).join(Stock).filter(Shop.id == id_shop).all():
                 print(inf_shop)
+
+
 search_publisher()
 
 session.close()
