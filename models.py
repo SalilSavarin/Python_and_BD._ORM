@@ -32,6 +32,9 @@ class Shop(Base):
     id = sq.Column(sq.Integer, primary_key= True)
     name = sq.Column(sq.String(length=100), unique= True)
 
+    def __str__(self):
+        return f'SHOP id - {self.id}: name {self.name}'
+
 class Stock(Base):
     __tablename__ = 'stock'
 
